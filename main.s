@@ -11,7 +11,7 @@ _main:
 	MOV #0x0000, W1	    ;used for delay_inner loop counter
 	MOV #0xFFFF, W2	    ;used for delay_inner loop max terminator
 	MOV #0x0000, W3	    ;used for delay loop counter
-	MOV #0x0002, W4	    ;used for delay loop max terminator
+	MOV #0x0001, W4	    ;used for delay loop max terminator
 	
 init_ports:
 	BCLR TRISA, #2
@@ -24,6 +24,34 @@ init_ports:
 	
 	
 routine_helicopter:
+	CALL turn_on_top_plane
+	CALL turn_on_bottom_plane
+	BSET LATA, #2
+	CALL delay
+	BCLR LATA, #2
+	CALL delay
+	
+	BSET LATA, #4
+	CALL delay
+	BCLR LATA, #4
+	CALL delay
+	
+	BSET LATB, #1
+	CALL delay
+	BCLR LATB, #1
+	CALL delay
+	
+	BSET LATA, #1
+	CALL delay
+	BCLR LATA, #1
+	CALL delay
+	
+	BRA routine_X_pattern
+	
+	
+	BRA done
+	
+routine_X_pattern:
 	CALL turn_on_top_plane
 	CALL turn_off_bottom_plane
 	BSET LATA, #2
@@ -47,12 +75,36 @@ routine_helicopter:
 	CALL delay
 	BCLR LATA, #1
 	CALL delay
+			    ;move to second part of X
 	
-	BRA routine_helicopter
+	CALL turn_off_top_plane
+	CALL turn_on_bottom_plane
+	BSET LATA, #2
+	CALL delay
+	BCLR LATA, #2
+	CALL delay
+	
+	BSET LATA, #4
+	CALL delay
+	BCLR LATA, #4
+	CALL delay
+	
+	CALL turn_on_top_plane
+	call turn_off_bottom_plane
+	BSET LATB, #1
+	CALL delay
+	BCLR LATB, #1
+	CALL delay
+	
+	BSET LATA, #1
+	CALL delay
+	BCLR LATA, #1
+	CALL delay
+	
+	BRA routine_X_pattern
 	
 	
 	BRA done
-	
 	
 turn_on_top_plane:
     BSET LATB, #15
