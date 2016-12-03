@@ -11,7 +11,7 @@ _main:
 	MOV #0x0000, W1	    ;used for delay_inner loop counter
 	MOV #0xFFFF, W2	    ;used for delay_inner loop max terminator
 	MOV #0x0000, W3	    ;used for delay loop counter
-	MOV #0x0003, W4	    ;used for delay loop max terminator
+	MOV #0x0002, W4	    ;used for delay loop max terminator
 	
 init_ports:
 	BCLR TRISA, #2
@@ -20,10 +20,12 @@ init_ports:
 	BCLR TRISA, #1
 	
 	BCLR TRISB, #15	    ;top row controller
+	BCLR TRISB, #6	    ;bottom row controller
 	
 	
 routine_helicopter:
 	CALL turn_on_top_plane
+	CALL turn_off_bottom_plane
 	BSET LATA, #2
 	CALL delay
 	BCLR LATA, #2
@@ -34,6 +36,8 @@ routine_helicopter:
 	BCLR LATA, #4
 	CALL delay
 	
+	CALL turn_off_top_plane
+	call turn_on_bottom_plane
 	BSET LATB, #1
 	CALL delay
 	BCLR LATB, #1
@@ -56,6 +60,14 @@ turn_on_top_plane:
 
 turn_off_top_plane:
     BCLR LATB, #15
+    
+    
+turn_on_bottom_plane:
+    BSET LATB, #6
+    return
+
+turn_off_bottom_plane:
+    BCLR LATB, #6
     
 delay:
     CALL delay_inner
