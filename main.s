@@ -107,19 +107,19 @@ routine_X_pattern:
 	BRA done
 	
 turn_on_top_plane:
-    BSET LATB, #15
-    return
-
-turn_off_top_plane:
-    BCLR LATB, #15
-    
-    
-turn_on_bottom_plane:
     BSET LATB, #6
     return
 
-turn_off_bottom_plane:
+turn_off_top_plane:
     BCLR LATB, #6
+    
+    
+turn_on_bottom_plane:
+    BSET LATB, #15
+    return
+
+turn_off_bottom_plane:
+    BCLR LATB, #15
     
 delay:
     CALL delay_inner
