@@ -12,6 +12,8 @@ _main:
 	MOV #0xFFFF, W2	    ;used for delay_inner loop max terminator
 	MOV #0x0000, W3	    ;used for delay loop counter
 	MOV #0x0001, W4	    ;used for delay loop max terminator
+	MOV #0x0000, W5	    ;used for routine repeat loop counter
+	MOV #0x0005, W6	    ;used for routine repeat max terminator 
 	
 init_ports:
 	BCLR TRISA, #2
@@ -46,8 +48,11 @@ routine_helicopter:
 	BCLR LATA, #1
 	CALL delay
 	
+	ADD #0x0001, W5
+	CP W5, W6
+	BRA NZ, routine_helicopter
+	MOV #0x0000, W5
 	BRA routine_X_pattern
-	
 	
 	BRA done
 	
@@ -101,8 +106,11 @@ routine_X_pattern:
 	BCLR LATA, #1
 	CALL delay
 	
-	BRA routine_X_pattern
-	
+	ADD #0x0001, W5
+	CP W5, W6
+	BRA NZ, routine_X_pattern
+	MOV #0x0000, W5
+	BRA routine_helicopter
 	
 	BRA done
 	
