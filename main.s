@@ -51,9 +51,70 @@ routine_helicopter:
 	CP W5, #0x000A
 	BRA NZ, routine_helicopter
 	MOV #0x0000, W5
-	BRA routine_X_pattern
+	BRA routine_helicopter_top
 	
 	BRA done
+	
+routine_helicopter_top:
+	CALL turn_on_top_plane
+	CALL turn_off_bottom_plane
+    
+	BSET LATA, #2
+	CALL delay
+	BCLR LATA, #2
+	CALL delay
+	
+	BSET LATA, #4
+	CALL delay
+	BCLR LATA, #4
+	CALL delay
+	
+	BSET LATB, #1
+	CALL delay
+	BCLR LATB, #1
+	CALL delay
+	
+	BSET LATA, #1
+	CALL delay
+	BCLR LATA, #1
+	CALL delay
+	
+	ADD #0x0001, W5
+	CP W5, #0x0005
+	BRA NZ, routine_helicopter_top
+	MOV #0x0000, W5
+	BRA routine_helicopter_bottom
+	
+routine_helicopter_bottom:
+	
+	CALL turn_off_top_plane
+	CALL turn_on_bottom_plane
+	
+	BSET LATA, #2
+	CALL delay
+	BCLR LATA, #2
+	CALL delay
+	
+	BSET LATA, #4
+	CALL delay
+	BCLR LATA, #4
+	CALL delay
+	
+	BSET LATB, #1
+	CALL delay
+	BCLR LATB, #1
+	CALL delay
+	
+	BSET LATA, #1
+	CALL delay
+	BCLR LATA, #1
+	CALL delay
+	
+	ADD #0x0001, W5
+	CP W5, #0x0005
+	BRA NZ, routine_helicopter_bottom
+	MOV #0x0000, W5
+	BRA routine_X_pattern
 	
 routine_X_pattern:
 	CALL turn_on_top_plane
