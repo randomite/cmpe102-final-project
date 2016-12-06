@@ -155,7 +155,7 @@ routine_X_pattern:
 	CALL delay
 	
 	CALL turn_on_top_plane
-	call turn_off_bottom_plane
+	CALL turn_off_bottom_plane
 	BSET LATB, #1
 	CALL delay
 	BCLR LATB, #1
@@ -170,6 +170,65 @@ routine_X_pattern:
 	CP W5, #0x0005
 	BRA NZ, routine_X_pattern
 	MOV #0x0000, W5
+	BRA routine_turn_on_all_lights
+	
+	BRA done
+	
+routine_turn_on_all_lights:
+	CALL turn_on_top_plane
+	CALL turn_off_bottom_plane
+	
+	BSET LATA, #1
+	CALL delay
+	CALL delay
+	CALL delay
+	BSET LATB, #1
+	CALL delay
+	CALL delay
+	CALL delay
+	BSET LATA, #4
+	CALL delay
+	CALL delay
+	CALL delay
+	BSET LATA, #2
+	CALL delay
+	CALL delay
+	CALL delay
+	
+	BCLR LATA, #1
+	BCLR LATB, #1
+	BCLR LATA, #4
+	BCLR LATA, #2
+	
+	CALL turn_off_top_plane
+	CALL turn_on_bottom_plane
+	CALL delay
+	CALL delay
+	
+	BSET LATA, #1
+	CALL delay
+	CALL delay
+	CALL delay
+	BSET LATB, #1
+	CALL delay
+	CALL delay
+	CALL delay
+	BSET LATA, #4
+	CALL delay
+	CALL delay
+	CALL delay
+	BSET LATA, #2
+	CALL delay
+	CALL delay
+	CALL delay
+	CALL turn_on_top_plane
+	CALL delay
+	CALL delay
+	CALL delay
+	CALL delay
+	CALL delay
+	CALL delay
+	
 	BRA routine_helicopter
 	
 	BRA done
