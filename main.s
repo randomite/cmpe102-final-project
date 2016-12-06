@@ -23,7 +23,6 @@ init_ports:
 	BCLR TRISB, #15	    ;top row controller
 	BCLR TRISB, #6	    ;bottom row controller
 	
-	
 routine_helicopter:
 	CALL turn_on_top_plane
 	CALL turn_on_bottom_plane
@@ -52,9 +51,7 @@ routine_helicopter:
 	BRA NZ, routine_helicopter
 	MOV #0x0000, W5
 	BRA routine_helicopter_top
-	
-	BRA done
-	
+		
 routine_helicopter_top:
 	CALL turn_on_top_plane
 	CALL turn_off_bottom_plane
@@ -171,9 +168,7 @@ routine_X_pattern:
 	BRA NZ, routine_X_pattern
 	MOV #0x0000, W5
 	BRA routine_turn_on_all_lights
-	
-	BRA done
-	
+		
 routine_turn_on_all_lights:
 	CALL turn_on_top_plane
 	CALL turn_off_bottom_plane
@@ -230,9 +225,7 @@ routine_turn_on_all_lights:
 	CALL delay
 	
 	BRA routine_helicopter
-	
-	BRA done
-	
+		
 turn_on_top_plane:
     BSET LATB, #6
     return
